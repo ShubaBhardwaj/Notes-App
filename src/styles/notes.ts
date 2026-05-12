@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const notesStyles = StyleSheet.create({
+export const getNotesStyles = (theme: any) => StyleSheet.create({
   header: {
     flex: 1,
     flexDirection: "row",
@@ -14,7 +14,7 @@ export const notesStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 24,
     fontWeight: "600",
-    color: "#111",
+    color: theme.text,
   },
 
   Btn: {
@@ -23,19 +23,19 @@ export const notesStyles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: "white",
+    backgroundColor: theme.buttonBackground,
 
     alignItems: "center",
     justifyContent: "center",
   },
 
   title: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.searchBackground,
     borderRadius: 30,
     paddingVertical: 12,
     paddingHorizontal: 22,
     fontSize: 18,
-    color: "#2D2D2D",
+    color: theme.text,
     marginBottom: 28,
 
     // for shadow in ios
@@ -52,12 +52,12 @@ export const notesStyles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.card,
     borderRadius: 20,
     paddingVertical: 12,
     paddingHorizontal: 22,
     fontSize: 15,
-    color: "#2D2D2D",
+    color: theme.text,
     marginBottom: 28,
     textAlignVertical: "top",
 

@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const navbarStyles = StyleSheet.create({
+export const getNavbarStyles = (theme: any) => StyleSheet.create({
   navbar: {
     position: "absolute",
     alignSelf: "center",
@@ -12,7 +12,7 @@ export const navbarStyles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 10,
 
-    backgroundColor: "#111",
+    backgroundColor: theme.text,
 
     borderRadius: 999,
   },
@@ -23,7 +23,7 @@ export const navbarStyles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: "white",
+    backgroundColor: theme.buttonBackground,
 
     alignItems: "center",
     justifyContent: "center",
@@ -35,7 +35,7 @@ export const navbarStyles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: "white",
+    backgroundColor: theme.buttonBackground,
 
     alignItems: "center",
     justifyContent: "center",

@@ -1,6 +1,8 @@
 import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
+  Appearance,
+  useColorScheme,
   FlatList,
   Image,
   Pressable,
@@ -10,7 +12,8 @@ import {
 } from "react-native";
 import Card from "../components/Card";
 import { notesServices } from "../services/notes_storage";
-import { homeStyles } from "../styles/home";
+import { getHomeStyles } from "../styles/home";
+import { Colors } from "../utils/theme";
 
 type Notes = {
   id: string;
@@ -21,8 +24,15 @@ type Notes = {
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = React.useState("");
-
   const [allNotes, setAllNotes] = useState<Notes[]>([]);
+
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
+  const homeStyles = getHomeStyles(theme);
+
+  const toggleTheme = () => {
+    Appearance.setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+  };
 
 
   const getAllNotes = async () => {
@@ -81,9 +91,9 @@ const Home = () => {
             <View>
               <Pressable
                 style={homeStyles.Btn}
-                onPress={() => console.log("pressed")}
+                onPress={toggleTheme}
               >
-                <Ionicons name="sunny-outline" size={28} color="black" />
+                <Ionicons name={colorScheme === 'dark' ? "moon-outline" : "sunny-outline"} size={28} color={theme.icon} />
               </Pressable>
             </View>
           </View>
@@ -98,6 +108,7 @@ const Home = () => {
           >
             <TextInput
               placeholder="Search notes..."
+              placeholderTextColor={theme.textSecondary}
               value={searchQuery}
               onChangeText={setSearchQuery}
               onSubmitEditing={() => handleSearch(searchQuery)}

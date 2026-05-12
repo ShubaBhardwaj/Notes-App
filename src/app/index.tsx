@@ -1,16 +1,22 @@
 import Ionicons from "@expo/vector-icons/Ionicons";
 import React from "react";
-import { Pressable, StyleSheet, View } from "react-native";
+import { Pressable, StyleSheet, View, useColorScheme } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Create_notes from "../components/create_notes";
 import Home from "../components/home";
-import { navbarStyles } from "../styles/navbar";
+import { getNavbarStyles } from "../styles/navbar";
+import { Colors } from "../utils/theme";
 
 export default function Index() {
   const inset = useSafeAreaInsets();
   const [screen, setScreen] = React.useState("home");
+  
+  const colorScheme = useColorScheme();
+  const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
+  const navbarStyles = getNavbarStyles(theme);
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       {/* screen */}
       {screen === "home" && <Home />}
       {screen === "create" && <Create_notes />}
@@ -27,7 +33,7 @@ export default function Index() {
           ]}
           onPress={() => setScreen("home")}
         >
-          <Ionicons name="home-outline" size={22} color={screen === "home" ? "white" : "black"}/>
+          <Ionicons name="home-outline" size={22} color={screen === "home" ? "white" : theme.icon}/>
         </Pressable>
 
         {/* CREATE BUTTON */}
@@ -39,7 +45,7 @@ export default function Index() {
           ]}
           onPress={() => setScreen("create")}
         >
-          <Ionicons name="add" size={28} color={screen === "create" ? "white" : "black"}/>
+          <Ionicons name="add" size={28} color={screen === "create" ? "white" : theme.icon}/>
         </Pressable>
       </View>
     </SafeAreaView>
@@ -49,6 +55,5 @@ export default function Index() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#EEF3FB",
   },
 });

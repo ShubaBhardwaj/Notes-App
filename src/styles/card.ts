@@ -1,10 +1,8 @@
 import { StyleSheet } from "react-native";
 
-
-
-const cardStyles = StyleSheet.create({
+export const getCardStyles = (theme: any) => StyleSheet.create({
   cardContainer: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.card,
     borderRadius: 20,
     paddingVertical: 16,
     paddingHorizontal: 20,
@@ -34,12 +32,12 @@ const cardStyles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: "600",
-    color: "#111",
+    color: theme.text,
     marginBottom: 6,
   },
   description: {
     fontSize: 15,
-    color: "#666",
+    color: theme.textSecondary,
     lineHeight: 22,
     marginBottom: 8,
   },
@@ -50,11 +48,9 @@ const cardStyles = StyleSheet.create({
   },
   deleteButton: {
     padding: 8,
-    backgroundColor: "#FFF0F0",
+    backgroundColor: theme.deleteButtonBg,
     borderRadius: 12,
     alignItems: "center",
     justifyContent: "center",
   }
-})
-
-export default cardStyles
+});

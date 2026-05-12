@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const homeStyles = StyleSheet.create({
+export const getHomeStyles = (theme: any) => StyleSheet.create({
   header: {
     flex: 1,
     flexDirection: "row",
@@ -34,11 +34,12 @@ export const homeStyles = StyleSheet.create({
   headerLeftText1: {
     fontSize: 20,
     fontWeight: "500",
+    color: theme.text,
   },
 
   headerLeftText2: {
     fontSize: 16,
-    color: "#666",
+    color: theme.textSecondary,
     marginTop: 2,
   },
   
@@ -48,19 +49,19 @@ export const homeStyles = StyleSheet.create({
 
     borderRadius: 25,
 
-    backgroundColor: "white",
+    backgroundColor: theme.buttonBackground,
 
     alignItems: "center",
     justifyContent: "center",
   },
 
   searchInput: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.searchBackground,
     borderRadius: 30,
     paddingVertical: 12,
     paddingHorizontal: 22,
     fontSize: 18,
-    color: "#2D2D2D",
+    color: theme.text,
     marginBottom: 28,
 
     // for shadow in ios
@@ -77,12 +78,12 @@ export const homeStyles = StyleSheet.create({
   },
 
   content: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: theme.card,
     borderRadius: 20,
     paddingVertical: 12,
     paddingHorizontal: 22,
     fontSize: 15,
-    color: "#2D2D2D",
+    color: theme.text,
     marginBottom: 28,
     textAlignVertical: "top",
 
