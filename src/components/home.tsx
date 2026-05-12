@@ -2,12 +2,13 @@ import { Ionicons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 import {
   Appearance,
-  useColorScheme,
   FlatList,
   Image,
+  ImageBackground,
   Pressable,
   Text,
   TextInput,
+  useColorScheme,
   View,
 } from "react-native";
 import Card from "../components/Card";
@@ -27,13 +28,12 @@ const Home = () => {
   const [allNotes, setAllNotes] = useState<Notes[]>([]);
 
   const colorScheme = useColorScheme();
-  const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
+  const theme = Colors[colorScheme === "dark" ? "dark" : "light"];
   const homeStyles = getHomeStyles(theme);
 
   const toggleTheme = () => {
-    Appearance.setColorScheme(colorScheme === 'dark' ? 'light' : 'dark');
+    Appearance.setColorScheme(colorScheme === "dark" ? "light" : "dark");
   };
-
 
   const getAllNotes = async () => {
     const notes = await notesServices.getNotes();
@@ -72,7 +72,7 @@ const Home = () => {
               {/* avatar image */}
               <View style={homeStyles.headerLeftImage}>
                 <Image
-                  source={require("../../assets/images/coverPhoto.png")}
+                  source={require("../../assets/images/avatarImage.png")}
                   style={homeStyles.headerLeftImageContent}
                 />
               </View>
@@ -89,16 +89,47 @@ const Home = () => {
 
             {/* Header Right Side */}
             <View>
-              <Pressable
-                style={homeStyles.Btn}
-                onPress={toggleTheme}
-              >
-                <Ionicons name={colorScheme === 'dark' ? "moon-outline" : "sunny-outline"} size={28} color={theme.icon} />
+              <Pressable style={homeStyles.Btn} onPress={toggleTheme}>
+                <Ionicons
+                  name={
+                    colorScheme === "dark" ? "moon-outline" : "sunny-outline"
+                  }
+                  size={28}
+                  color={theme.icon}
+                />
               </Pressable>
             </View>
           </View>
 
-          {/* Search bar */}
+          {/* Cover Image */}
+          <ImageBackground
+            source={
+              colorScheme === "dark"
+                ? require("../../assets/images/coverImageDarkMode.png")
+                : require("../../assets/images/coverImage.png")
+            }
+            style={homeStyles.headerBackground}
+          >
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-end",
+                padding: 20,
+              }}
+            >
+              <Text style={{ 
+                color: colorScheme === "dark" ? "white" : "black", 
+                fontSize: 26, 
+                fontWeight: "600",
+                textShadowColor: 'rgba(0, 0, 0, 0.5)',
+                textShadowOffset: { width: 0, height: 2 },
+                textShadowRadius: 4
+              }}>
+                Organizing your notes
+              </Text>
+            </View>
+          </ImageBackground>
+
           {/* Search bar */}
           <View
             style={{
@@ -143,7 +174,7 @@ const Home = () => {
           onDelete={() => handleDeleteNote(item.id)}
         />
       )}
-      ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
+      ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
     />
   );
 };

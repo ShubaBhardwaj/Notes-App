@@ -6,7 +6,7 @@ export const getCardStyles = (theme: any) => StyleSheet.create({
     borderRadius: 20,
     paddingVertical: 16,
     paddingHorizontal: 20,
-    marginBottom: 16,
+    marginBottom: 0,
     
     // for shadow in ios
     shadowColor: "#000",

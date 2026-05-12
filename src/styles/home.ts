@@ -6,10 +6,19 @@ export const getHomeStyles = (theme: any) => StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 20,
+    // paddingHorizontal: 20,
     paddingVertical: 10,
-    marginBottom: 25,
+    marginBottom: 15,
   },
+
+  headerBackground: {
+    height: 180,
+    // marginHorizontal: 20,
+    marginTop: 0,
+    borderRadius: 20,
+    overflow: "hidden",
+  },
+
 
   headerLeftSide: {
     flexDirection: "row",
