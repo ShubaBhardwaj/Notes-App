@@ -4,12 +4,14 @@ import { Pressable, StyleSheet, View, useColorScheme } from "react-native";
 import { SafeAreaView, useSafeAreaInsets } from "react-native-safe-area-context";
 import Create_notes from "../components/create_notes";
 import Home from "../components/home";
+import View_notes from "../components/view_notes";
 import { getNavbarStyles } from "../styles/navbar";
 import { Colors } from "../utils/theme";
 
 export default function Index() {
   const inset = useSafeAreaInsets();
   const [screen, setScreen] = React.useState("home");
+  const [selectedNote, setSelectedNote] = React.useState<any>(null);
   
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
@@ -18,8 +20,18 @@ export default function Index() {
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.background }]}>
       {/* screen */}
-      {screen === "home" && <Home />}
+      {screen === "home" && (
+        <Home 
+          onNotePress={(note) => {
+            setSelectedNote(note);
+            setScreen("view");
+          }} 
+        />
+      )}
       {screen === "create" && <Create_notes />}
+      {screen === "view" && selectedNote && (
+        <View_notes title={selectedNote.title} content={selectedNote.description} />
+      )}
 
       
       {/* bottom_nav */}

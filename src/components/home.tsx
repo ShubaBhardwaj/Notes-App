@@ -23,7 +23,7 @@ type Notes = {
   createdAt: string;
 };
 
-const Home = () => {
+const Home = ({ onNotePress }: { onNotePress?: (note: Notes) => void }) => {
   const [searchQuery, setSearchQuery] = React.useState("");
   const [allNotes, setAllNotes] = useState<Notes[]>([]);
 
@@ -172,6 +172,7 @@ const Home = () => {
           description={item.description}
           date={item.createdAt}
           onDelete={() => handleDeleteNote(item.id)}
+          onPress={() => onNotePress && onNotePress(item)}
         />
       )}
       ItemSeparatorComponent={() => <View style={{ height: 10 }} />}

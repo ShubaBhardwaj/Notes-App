@@ -9,9 +9,10 @@ type CardProps = {
     description: string;
     date: string;
     onDelete?: () => void;
+    onPress?: () => void;
 }
 
-const Card = ({ title, description, date, onDelete }: CardProps) => {
+const Card = ({ title, description, date, onDelete, onPress }: CardProps) => {
   const colorScheme = useColorScheme();
   const theme = Colors[colorScheme === 'dark' ? 'dark' : 'light'];
   const cardStyles = getCardStyles(theme);
@@ -32,18 +33,20 @@ const Card = ({ title, description, date, onDelete }: CardProps) => {
   };
 
   return (
-    <View style={cardStyles.cardContainer}>
-      <View style={cardStyles.row}>
-        <View style={cardStyles.textContainer}>
-          <Text style={cardStyles.title} numberOfLines={1}>{title}</Text>
-          <Text style={cardStyles.description} numberOfLines={2}>{shortDescription}</Text>
-          <Text style={cardStyles.date}>{formattedDate}</Text>
+    <Pressable onPress={onPress}>
+      <View style={cardStyles.cardContainer}>
+        <View style={cardStyles.row}>
+          <View style={cardStyles.textContainer}>
+            <Text style={cardStyles.title} numberOfLines={1}>{title}</Text>
+            <Text style={cardStyles.description} numberOfLines={2}>{shortDescription}</Text>
+            <Text style={cardStyles.date}>{formattedDate}</Text>
+          </View>
+          <Pressable onPress={handleDelete} style={cardStyles.deleteButton}>
+            <Ionicons name="trash-outline" size={24} color={theme.deleteIcon} />
+          </Pressable>
         </View>
-        <Pressable onPress={handleDelete} style={cardStyles.deleteButton}>
-          <Ionicons name="trash-outline" size={24} color={theme.deleteIcon} />
-        </Pressable>
       </View>
-    </View>
+    </Pressable>
   )
 }
 
