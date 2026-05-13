@@ -53,11 +53,88 @@ A beautiful, fully-featured Note Taking mobile application built with React Nati
 The application is built using standard React Native components to ensure high performance and a native feel:
 
 - **Styling (`StyleSheet`)**: Uses `StyleSheet.create()` to isolate component styles. All styles are placed logically in the `src/styles/` folder so each component has its respective styling file (e.g., `home.ts` for the `Home` component).
+  ```tsx
+  // src/styles/home.ts
+  export const getHomeStyles = (theme: any) => StyleSheet.create({
+    headerBackground: {
+      height: 180,
+      borderRadius: 20,
+      overflow: "hidden",
+    },
+  });
+  ```
+
 - **`ImageBackground`**: Used to render the beautiful banner image at the top of the Home screen with the text overlay *"Organizing your notes"*.
+  ```tsx
+  // src/components/home.tsx
+  <ImageBackground
+    source={
+      colorScheme === "dark"
+        ? require("../../assets/images/coverImageDarkMode.png")
+        : require("../../assets/images/coverImage.png")
+    }
+    style={homeStyles.headerBackground}
+  >
+    <Text>Organizing your notes</Text>
+  </ImageBackground>
+  ```
+
 - **Keyboard Management**: Uses iOS `automaticallyAdjustKeyboardInsets` and Android OS-level window resizing (plus conditionally `KeyboardAvoidingView`) to ensure that typing long notes or searching remains comfortable without the keyboard hiding your text.
+  ```tsx
+  // src/components/view_notes.tsx
+  <KeyboardAvoidingView
+    behavior="padding"
+    enabled={Platform.OS === 'android' && isEditing}
+  >
+    <ScrollView automaticallyAdjustKeyboardInsets={true}>
+      <TextInput multiline value={editContent} onChangeText={setEditContent} />
+    </ScrollView>
+  </KeyboardAvoidingView>
+  ```
+
 - **`Pressable`**: Used heavily for interactive elements like note cards, the floating pill navigation icons, and theme toggles. It allows customized opacity/feedback actions.
+  ```tsx
+  // src/components/home.tsx
+  <Pressable style={homeStyles.Btn} onPress={toggleTheme}>
+    <Ionicons
+      name={colorScheme === "dark" ? "moon-outline" : "sunny-outline"}
+      size={28}
+      color={theme.icon}
+    />
+  </Pressable>
+  ```
+
 - **`TextInput`**: The core input method for searching, creating, and editing notes.
+  ```tsx
+  // src/components/home.tsx
+  <TextInput
+    placeholder="Search notes..."
+    placeholderTextColor={theme.textSecondary}
+    value={searchQuery}
+    onChangeText={setSearchQuery}
+    onSubmitEditing={() => handleSearch(searchQuery)}
+    returnKeyType="search"
+    style={homeStyles.searchInput}
+  />
+  ```
+
 - **`FlatList`**: Ensures smooth scrolling and efficient memory usage when rendering the list of note cards.
+  ```tsx
+  // src/components/home.tsx
+  <FlatList
+    data={allNotes}
+    keyExtractor={(item) => item.id}
+    renderItem={({ item }) => (
+      <Card
+        title={item.title}
+        description={item.description}
+        date={item.createdAt}
+        onDelete={() => handleDeleteNote(item.id)}
+        onPress={() => onNotePress && onNotePress(item)}
+      />
+    )}
+  />
+  ```
 
 ### Code Snippet: Theming
 The app relies heavily on `useColorScheme` to pick colors from a predefined theme palette:
