@@ -79,4 +79,28 @@ export const notesServices = {
       return [];
     }
   },
+
+  updateNote: async (id: string, title: string, description: string) => {
+    try {
+      // GET ALL NOTES
+      const notes = await AsyncStorage.getItem("notes");
+
+      // PARSE NOTES
+      const parsedNotes: Notes[] = notes ? JSON.parse(notes) : [];
+
+      // UPDATE NOTE
+      const updatedNotes = parsedNotes.map((note) =>
+        note.id === id ? { ...note, title, description} : note,
+      );
+
+      // SAVE AGAIN
+      await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
+
+      return updatedNotes;
+    } catch (error) {
+      console.error("Error updating note:", error);
+
+      return [];
+    }
+  },
 };

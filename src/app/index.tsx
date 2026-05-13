@@ -30,7 +30,7 @@ export default function Index() {
       )}
       {screen === "create" && <Create_notes />}
       {screen === "view" && selectedNote && (
-        <View_notes title={selectedNote.title} content={selectedNote.description} />
+        <View_notes id={selectedNote.id} title={selectedNote.title} content={selectedNote.description} />
       )}
 
       

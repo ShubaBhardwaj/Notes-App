@@ -4,7 +4,7 @@ export const viewNoteStyles = (theme: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: theme.background,
-    paddingTop: Platform.OS === 'android' ? 40 : 50,
+    paddingTop: 20,
     paddingHorizontal: 20,
   },
   header: {
@@ -33,7 +33,7 @@ export const viewNoteStyles = (theme: any) => StyleSheet.create({
     flex: 1,
   },
   title: {
-    fontSize: 24,
+    fontSize: 26,
     fontWeight: 'bold',
     color: theme.text,
     marginBottom: 15,
