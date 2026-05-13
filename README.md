@@ -1,5 +1,9 @@
 # 📝 Note Taking App
 
+![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Expo](https://img.shields.io/badge/Expo-1B1F23?style=for-the-badge&logo=expo&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+
 A beautiful, fully-featured Note Taking mobile application built with React Native and Expo. The app features a stunning, adaptive UI with seamless transitions between Light and Dark modes. 
 
 ## ✨ Key Features
@@ -63,6 +67,39 @@ The application is built using standard React Native components to ensure high p
     },
   });
   ```
+
+- **Data Persistence (`AsyncStorage`)**: Notes are saved locally on the device using `@react-native-async-storage/async-storage`. I created a robust `notesServices` module to handle all CRUD (Create, Read, Update, Delete) operations asynchronously. 
+  
+  **Logical Thinking:** Rather than placing storage logic directly inside UI components, I abstracted it into a dedicated service layer. This ensures the UI remains clean and the database logic is reusable. For example, when updating a note, I fetch the existing array, map over it to find the specific note ID, apply the edits immutably, and then save the entire array back to device storage:
+  ```tsx
+  // src/services/notes_storage.ts
+  export const notesServices = {
+    updateNote: async (id: string, title: string, description: string) => {
+      try {
+        // 1. Retrieve the existing notes string from storage
+        const notes = await AsyncStorage.getItem("notes");
+        
+        // 2. Parse into a workable array, falling back to an empty array if null
+        const parsedNotes: Notes[] = notes ? JSON.parse(notes) : [];
+        
+        // 3. Map over the array to locate and update the targeted note immutably
+        const updatedNotes = parsedNotes.map((note) =>
+          note.id === id ? { ...note, title, description } : note
+        );
+        
+        // 4. Stringify and save the updated array back to device storage
+        await AsyncStorage.setItem("notes", JSON.stringify(updatedNotes));
+        return updatedNotes;
+      } catch (error) {
+        console.error("Error updating note:", error);
+        return [];
+      }
+    },
+    // ...other methods (saveNote, getNotes, deleteNote, searchNotes)
+  };
+  ```
+
+- **`@expo/vector-icons`**: Utilized heavily for gorgeous, scalable vector iconography throughout the UI (e.g., the `Ionicons` package for settings, theme toggles, and UI interactions).
 
 - **`ImageBackground`**: Used to render the beautiful banner image at the top of the Home screen with the text overlay *"Organizing your notes"*.
   ```tsx
@@ -149,7 +186,7 @@ const styles = viewNoteStyles(theme);
 
 ## 📁 Project Structure
 
-```
+```text
 Notes_Taking/
 ├── assets/             # Images, fonts, and demo media
 │   └── demo/           # Screenshots and demo videos
@@ -166,6 +203,24 @@ Notes_Taking/
 
 ---
 
+## 📝 Future Roadmap
+
+- [ ] Add rich text formatting (bold, italics, underlines)
+- [ ] Implement note tagging and categorization features
+- [ ] Integrate Cloud Sync functionality across multiple devices
+
+---
+
+## ⚙️ Prerequisites
+
+Before you clone and run the project, ensure you have the following installed on your system:
+* **Node.js** (v18 or higher)
+* **npm** or **yarn**
+* **Expo CLI** (`npm install -g expo-cli`)
+* **Expo Go** application installed on your physical iOS or Android device (for live testing).
+
+---
+
 ## 🚀 How to Clone and Run
 
 1. **Clone the repository**
@@ -175,7 +230,6 @@ Notes_Taking/
    ```
 
 2. **Install Dependencies**
-   Make sure you have Node.js installed, then run:
    ```bash
    npm install
    # or if you use yarn
@@ -190,4 +244,13 @@ Notes_Taking/
 4. **Run on your device/emulator**
    - Press **`a`** in the terminal to open on an Android emulator.
    - Press **`i`** in the terminal to open on an iOS simulator.
-   - Or download the **Expo Go** app on your physical smartphone and scan the QR code in your terminal.
+   - Or download the **Expo Go** app on your physical smartphone and scan the QR code displayed in your terminal.
+
+---
+
+## 👨‍💻 Author
+
+**Shubham Bhardwaj** - *Software Engineer*
+
+- 💼 **LinkedIn**: [www.linkedin.com/in/shubhamai](https://www.linkedin.com/in/shubhamai)
+- 🕮 **X (Twitter)**: [@SharmaShub76868](https://x.com/SharmaShub76868)
